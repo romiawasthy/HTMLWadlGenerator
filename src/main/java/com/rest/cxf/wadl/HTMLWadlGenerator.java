@@ -1,4 +1,4 @@
-package com.romi.wadl;
+package com.rest.cxf.wadl;
 
 import java.io.StringReader;
 import java.io.StringWriter;
