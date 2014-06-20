@@ -4,6 +4,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,11 +21,8 @@ import org.apache.cxf.jaxrs.model.ClassResourceInfo;
 import org.apache.cxf.jaxrs.model.wadl.WadlGenerator;
 import org.apache.cxf.message.Message;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class HTMLWadlGenerator extends WadlGenerator {
-  private final static Logger logger = Logger.getLogger(HTMLWadlGenerator.class.getName());
+  
 
   @Override
   public Response handleRequest(Message m, ClassResourceInfo resource) {
@@ -52,9 +50,9 @@ public class HTMLWadlGenerator extends WadlGenerator {
         
         
       } catch (TransformerConfigurationException e) {
-        logger.log(Level.SEVERE, e.toString());
+        throw new WebApplicationException(e, 500);
       } catch (TransformerException e) {
-        logger.log(Level.SEVERE, e.toString());
+        throw new WebApplicationException(e, 500);
       }
 
       response = Response.ok().type(MediaType.APPLICATION_XML_TYPE).entity(writer.toString()).build();
